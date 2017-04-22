@@ -11,10 +11,10 @@ LinkedList<T>::iterator::iterator(Node<T> *item = nullptr)
 }
 
 template <class T>
-Node<T>* LinkedList<T>::iterator::operator*()
+T LinkedList<T>::iterator::operator*()
 {
-	return iterator::item;
-}	  
+	return iterator::item->getValue();
+}
 
 template <class T>
 Node<T>* LinkedList<T>::iterator::operator->()
@@ -37,13 +37,20 @@ typename LinkedList<T>::iterator& LinkedList<T>::iterator::operator--(int)
 }
 
 template <class T>
+typename LinkedList<T>::iterator& LinkedList<T>::iterator::operator--()
+{
+	this->item = this->item->getPrev();
+	return *this;
+}
+
+template <class T>
 typename LinkedList<T>::iterator& LinkedList<T>::iterator::operator+(int value)
 {
 	while (value--)
 	{
 		this->item = this->item->getNext();
 	}
-	
+
 	return *this;
 }
 
@@ -61,8 +68,23 @@ typename LinkedList<T>::iterator& LinkedList<T>::iterator::operator-(int value)
 template <class T>
 bool LinkedList<T>::iterator::operator==(iterator second)
 {
-	return item == second.item;
-}
+	if (item == nullptr)
+	{
+		return true;
+	}
+
+	if (item->getIndex() == 0 && second.item->getIndex() == 0)
+	{
+		return false;
+	}
+
+	if (item->getNext() == nullptr && second.item->getNext() == nullptr)
+	{
+		return false;
+	}
+
+	return this->item->getIndex() == second.item->getIndex();
+}					
 
 template <class T>
 bool LinkedList<T>::iterator::operator!=(iterator second)
@@ -71,11 +93,17 @@ bool LinkedList<T>::iterator::operator!=(iterator second)
 }
 
 template <class T>
+Node<T>* LinkedList<T>::iterator::getNode()
+{
+	return this->item;
+}
+
+template <class T>
 LinkedList<T>::LinkedList()
 {
 	this->listSize = 0;
-	top = nullptr;
-	tail = nullptr;
+	this->top = nullptr;
+	this->tail = nullptr;
 }
 
 template <class T>
@@ -87,7 +115,7 @@ LinkedList<T>::~LinkedList()
 template <class T>
 void LinkedList<T>::push_top(T value)
 {
-	Node<T> *node = new Node<T>(value);
+	Node<T> *node = new Node<T>(value, 0);
 
 	if (isEmpty())
 	{
@@ -101,13 +129,15 @@ void LinkedList<T>::push_top(T value)
 	node->setNext(top);
 	top = node;
 
+	moveNodeIndex(top->getNext());
+
 	listSize++;
 }
 
 template <class T>
 void LinkedList<T>::push_back(T value)
 {
-	Node<T> *node = new Node<T>(value);
+	Node<T> *node = new Node<T>(value, tail->getIndex() + 1);
 
 	if (!isEmpty())
 	{
@@ -127,8 +157,8 @@ void LinkedList<T>::push_back(T value)
 template <class T>
 void LinkedList<T>::insert(iterator pos, T value)
 {
-	Node<T> *newNode = new Node<T>(value);
-	Node<T> *insertNode = *pos;
+	Node<T> *newNode = new Node<T>(value, pos.item->getIndex() + 1);
+	Node<T> *insertNode = pos.getNode();
 	newNode->setNext(insertNode);
 
 	if (insertNode->getPrev())
@@ -142,6 +172,8 @@ void LinkedList<T>::insert(iterator pos, T value)
 		top->setPrev(newNode);
 		top = newNode;
 	}
+
+	moveNodeIndex(newNode->getNext());
 
 	listSize++;
 }
@@ -188,7 +220,6 @@ void LinkedList<T>::erase(iterator first, iterator last)
 	}
 }
 
-
 template <class T>
 typename LinkedList<T>::iterator LinkedList<T>::begin()
 {
@@ -198,7 +229,7 @@ typename LinkedList<T>::iterator LinkedList<T>::begin()
 template <class T>
 typename LinkedList<T>::iterator LinkedList<T>::end()
 {
-	return tail->getNext();
+	return tail;
 }
 
 template <class T>
@@ -218,3 +249,21 @@ bool LinkedList<T>::isEmpty()
 {
 	return listSize == 0;
 }
+
+template <class T>
+void LinkedList<T>::moveNodeIndex(iterator it)
+{
+	if (it.item == nullptr)
+	{
+		return;
+	}
+
+	for (; it != end(); it++)
+	{
+		if (it.item != nullptr)
+		{
+			it.item->setIndex(it.item->getIndex() + 1);
+		}
+	}
+}
+

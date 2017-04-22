@@ -1,3 +1,7 @@
-﻿  Program.cpp
+﻿  stdafx.cpp
+  Node.cpp
+  LinkedList.cpp
+  Program.cpp
+  Создание кода...
   DoublyLinkedList.vcxproj -> C:\Users\Andrey\documents\visual studio 2015\Projects\DoublyLinkedList\Debug\DoublyLinkedList.exe
   DoublyLinkedList.vcxproj -> C:\Users\Andrey\documents\visual studio 2015\Projects\DoublyLinkedList\Debug\DoublyLinkedList.pdb (Full PDB)

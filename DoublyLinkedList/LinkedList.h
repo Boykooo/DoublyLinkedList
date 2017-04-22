@@ -6,24 +6,22 @@ namespace linkedList
 
 	template <class T> class LinkedList
 	{
-	private:
-		Node<T>* top;
-		Node<T>* tail;
-		int listSize;
+	
 	public:
 		struct iterator
 		{
 			Node<T> *item;
 			iterator(Node<T> *item_);
-			Node<T>* operator*();
+			T operator*();
 			Node<T>* operator->();
 			iterator& operator++(int);
 			iterator& operator--(int);
+			iterator& operator--();
 			iterator& operator+(int value);
 			iterator& operator-(int value);
 			bool operator==(iterator second);
 			bool operator!=(iterator second);
-
+			Node<T>* getNode();
 		};
 
 		LinkedList();
@@ -38,5 +36,11 @@ namespace linkedList
 		int size();
 		void clear();
 		bool isEmpty();
+
+	private:
+		Node<T>* top;
+		Node<T>* tail;
+		int listSize;
+		void moveNodeIndex(iterator it);
 	};
 }
