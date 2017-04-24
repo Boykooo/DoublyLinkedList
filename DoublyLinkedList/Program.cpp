@@ -95,7 +95,7 @@ int main()
 	list->push_back(5);
 	list->push_back(6);
 
-	cout << "List :" << endl;
+	cout << endl <<"List :" << endl;
 	for (auto i = list->begin(); i != list->end(); i++)
 	{
 		cout << *i << " ";
@@ -105,7 +105,7 @@ int main()
 	for (auto i = list->end(); i != list->begin(); i--)
 	{
 			cout << *i << " ";
-	}
+	}	   
 
 
 

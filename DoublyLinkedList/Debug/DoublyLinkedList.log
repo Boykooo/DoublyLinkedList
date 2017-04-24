@@ -1,4 +1,5 @@
-﻿  stdafx.cpp
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppClean.targets(76,5): warning : Процесс не может получить доступ к файлу "c:\users\andrey\documents\visual studio 2015\projects\doublylinkedlist\doublylinkedlist\debug\doublylinkedlist.pch", так как этот файл используется другим процессом.
+  stdafx.cpp
   Node.cpp
   LinkedList.cpp
   Program.cpp

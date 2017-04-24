@@ -41,6 +41,7 @@ namespace linkedList
 		Node<T>* top;
 		Node<T>* tail;
 		int listSize;
-		void moveNodeIndex(iterator it);
+		void incNodeIndex(iterator it);
+		void decNodeIndex(iterator it);
 	};
 }
